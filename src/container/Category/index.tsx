@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { Row, Col, Button, Table, Modal, Form } from 'react-bootstrap'
+import { Row, Col, Button } from 'react-bootstrap'
+import Confirm from '../../core/component/Confirm';
+import Form from './Form';
+import List from './List';
 
 function Category(){
     const [formShow, setFormShow] = useState(false);
@@ -20,63 +23,15 @@ function Category(){
             <br/>
             <Row>
                 <Col md={12}>
-                    <Table striped bordered hover>
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>name</td>
-                                <td>
-                                    <Button variant="primary" onClick={handleFormShow}>Update</Button>
-                                    &nbsp;
-                                    <Button variant="danger" onClick={handleAlertShow}>Remove</Button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </Table>
+                    <List handleUpdate={handleFormShow} handleRemove={handleAlertShow}></List>
                 </Col>
             </Row>
-            <Modal show={formShow} onHide={handleFormClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Save Category</Modal.Title>
-                </Modal.Header>
-                <Form>
-                    <Modal.Body> 
-                        <Form.Group controlId="name">
-                            <Form.Label>Name</Form.Label>
-                            <Form.Control type="text" />
-                        </Form.Group>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleFormClose}>
-                            Close
-                        </Button>
-                        <Button variant="primary" onClick={handleFormClose}>
-                            Save Changes
-                        </Button>
-                    </Modal.Footer>
-                </Form>
-            </Modal>
-            <Modal show={alertShow} onHide={handleAlertClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Remove Category</Modal.Title>
-                </Modal.Header>
-                <Modal.Body> 
-                    Are you sure you want to remove this item?
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleAlertClose}>
-                        NO
-                    </Button>
-                    <Button variant="danger" onClick={handleAlertClose}>
-                        YES
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+            <Form show={formShow} handleClose={handleFormClose}></Form>
+            <Confirm
+            show={alertShow}
+            handleClose={handleAlertClose}
+            title='Remove Category'
+            text='Are you sure you want to remove this item?'></Confirm>
         </div>
     );
 }
